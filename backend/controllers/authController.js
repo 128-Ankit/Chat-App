@@ -27,15 +27,14 @@ const Signup = async (req, res) => {
             fullName,
             username,
             password: hashPassword,
-            confirmPassword,
             gender,
             profilePic: gender === 'male' ? boyProfilePic : girlProfilePic
         });
 
         if (newUser) {
             //Create JWT token here
-            const accessToken = createAccessToken(newUser._id,res);
             await newUser.save();
+            const accessToken = createAccessToken(newUser._id, res);
 
             res.status(200).json({
                 success: true,
@@ -43,6 +42,7 @@ const Signup = async (req, res) => {
                 newUser: newUser.user,
                 profilePic: newUser.profilePic,
                 message: "User Created successfully!",
+                accessToken
             })
         }
         else {
@@ -59,18 +59,45 @@ const Signup = async (req, res) => {
 
 // User Login
 const Login = async (req, res) => {
-    console.log("login");
-    // Add your login logic here
-    // e.g., verifying user credentials, generating JWT tokens, etc.
-    res.send("Login endpoint hit");
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        const isCurrectPassword = await bcrypt.compare(password, user?.password || "");
+        if (!user || !isCurrectPassword) {
+            return res.status(401).json({ success: false, msg: "Invalid Credentials" });
+        }
+        const accessToken = createAccessToken(user._id, res);
+        res.status(200).json({
+            success: true,
+            _id: user.id,
+            username: user.username,
+            gender:user.gender,
+            profilePic: user.profilePic,
+            message:
+                "Logged in Successfully! Welcome Back!",
+            token: accessToken
+        })
+    } catch (error) {
+        console.log("Error: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Server Error, User login failed! " + error
+        })
+    }
 }
 
 // User Logout
 const Logout = async (req, res) => {
-    console.log("logout");
-    // Add your logout logic here
-    // e.g., invalidating user session, clearing cookies, etc.
-    res.send("Logout endpoint hit");
+    try {
+        res.cookie("jwt","",{maxAge:0});
+        res.status(200).json({success:true,msg:"User logged out!"})
+    } catch (error) {
+        console.log("Error: ", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Server Error, User logout failed! " + error
+        })
+    }
 }
 
 module.exports = { Signup, Login, Logout };

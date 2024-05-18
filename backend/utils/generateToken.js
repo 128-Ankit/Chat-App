@@ -13,6 +13,7 @@ const createAccessToken = (userId, res) => {
         sameSite:"strict", // CSRF attacks cross-site request forgery attacks
         secure: false, // set it to true if using https
     })
+    return token
 }
 
 module.exports = createAccessToken
