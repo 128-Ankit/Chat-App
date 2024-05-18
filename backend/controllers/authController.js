@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const createAccessToken = require("../utils/generateToken");
 
 // User SignUp
 const Signup = async (req, res) => {
@@ -31,15 +32,22 @@ const Signup = async (req, res) => {
             profilePic: gender === 'male' ? boyProfilePic : girlProfilePic
         });
 
-        await newUser.save();
+        if (newUser) {
+            //Create JWT token here
+            const accessToken = createAccessToken(newUser._id,res);
+            await newUser.save();
 
-        res.status(200).json({
-            success: true,
-            _id: newUser._id,
-            newUser: newUser.user,
-            profilePic: newUser.profilePic,
-            message: "User Created successfully!"
-        })
+            res.status(200).json({
+                success: true,
+                _id: newUser._id,
+                newUser: newUser.user,
+                profilePic: newUser.profilePic,
+                message: "User Created successfully!",
+            })
+        }
+        else {
+            throw new Error("Creating user failed!");
+        }
     } catch (error) {
         console.log("Error: ", error.message);
         res.status(500).json({
