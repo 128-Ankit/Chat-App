@@ -1,0 +1,28 @@
+
+	Step-1: Project setup:-
+			A) backend:- 	
+			     a) controller
+			     b) db
+			     c) middleware
+			     d) models
+			     e) routes
+			     f) utils
+			     g) server.js
+
+			B) frontend-> src:-	
+			     a) assets
+			     b) componets
+			     c) constext
+			     d) hooks
+			     e) pages
+			     f) zustand
+			     
+	Step-2: Install the following packages in backend:- 
+			a) npm i express dotenv cookie-parser bcryptjs mongoose socket.io jsonwebtoken nodemon
+
+	Step-3: Install the following packages in frontend:- 
+			a) npm i create vite@latest . --react --javaScript
+			a) npm i express dotenv cookie-parser bcryptjs mongoose socket.io jsonwebtoken nodemon
+
+
+			 
