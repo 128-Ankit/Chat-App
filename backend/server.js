@@ -22,7 +22,7 @@ app.get("/", (req,res)=>{
 //mounting routes
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/message', messageRoute);
-app.use('/api/v1/user', userRoute);
+app.use('/api/v1/users', userRoute);
 app.listen(PORT, ()=>{
     console.log(`Server is running on port: ${PORT}`);
 });
