@@ -1,10 +1,12 @@
 import './App.css'
-
-function App() {
+import Home from "./pages/home/Home";
+const App = () => {
 
   return (
     <>
-     <div>this is app section</div>
+      <div className='p-4 h-screen flex items-center justify-center'>
+        <Home />
+      </div>
     </>
   )
 }
