@@ -20,7 +20,7 @@ const useLogin = () => {
             if(res.ok){
                 localStorage.setItem("chat-user", JSON.stringify(data));
                 setAuthUser(data);
-                toast.success(data.message || "Login Successful2");
+                toast.success(data.message || "Login Successful");
             }
             else if (data.error) {
                 throw new Error(data.error);

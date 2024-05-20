@@ -71,10 +71,9 @@ const Login = async (req, res) => {
             success: true,
             _id: user.id,
             username: user.username,
-            gender:user.gender,
+            gender: user.gender,
             profilePic: user.profilePic,
-            message:
-                "Logged in Successfully! Welcome Back!",
+            message: "Logged in Successfully! Welcome Back!",
             token: accessToken
         })
     } catch (error) {
@@ -89,8 +88,8 @@ const Login = async (req, res) => {
 // User Logout
 const Logout = async (req, res) => {
     try {
-        res.cookie("jwt","",{maxAge:0});
-        res.status(200).json({success:true,msg:"User logged out!"})
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ success: true, msg: "User logged out!" })
     } catch (error) {
         console.log("Error: ", error.message);
         res.status(500).json({
